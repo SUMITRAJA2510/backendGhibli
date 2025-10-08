@@ -1,14 +1,25 @@
-# Use OpenJDK 17 as the base image
+# Step 1: Build stage
+FROM maven:3.9.5-eclipse-temurin-17 AS build
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy source code and build the application
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Step 2: Runtime stage
 FROM openjdk:17-jdk-slim
+WORKDIR /app
 
-# Argument for the jar file name
-ARG JAR_FILE=target/ghbliArt-0.0.1-SNAPSHOT.jar
+# Copy the built jar from the build stage
+COPY --from=build /app/target/*.jar app.jar
 
-# Copy the jar file into the container
-COPY ${JAR_FILE} app.jar
-
-# Expose port 8080 (default Spring Boot port)
+# Expose port
 EXPOSE 8080
 
-# Run the jar file
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Run the jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
