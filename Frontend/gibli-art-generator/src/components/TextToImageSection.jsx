@@ -13,10 +13,6 @@ const TextToImageSection = () => {
 
     const isCreateDisabled = isLoading || !prompt.trim();
 
-    //  Use environment variable (falls back to localhost for local dev)
-    const API_BASE_URL =
-        process.env.REACT_APP_BACKEND_URL || "http://localhost:8080/api/v1";
-
     const handleGenerate = async () => {
         if (!prompt.trim()) {
             setError("Please enter a description for your artwork.");
@@ -29,12 +25,14 @@ const TextToImageSection = () => {
         const payload = { prompt, style };
 
         try {
-            const BACKEND_API_URL = `${API_BASE_URL}/generate-from-text`;
-            const response = await fetch(BACKEND_API_URL, {
+            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
+            const response = await fetch(`${API_BASE_URL}/generate-from-text`,{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
             });
+
+
 
             if (!response.ok) {
                 const errorText = await response.text();

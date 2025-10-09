@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-const API_URL = `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8080/api/v1"}`;
-
 function resizeImage(file, maxWidth = 1024, maxHeight = 1024) {
     return new Promise((resolve, reject) => {
         const img = new Image();
@@ -55,8 +53,8 @@ const ImageUploader = () => {
             const formData = new FormData();
             formData.append("image", resizedBlob, "resized.png");
             formData.append("prompt", "your prompt here"); // optional
-
-            const response = await fetch(`${API_URL}/generate-from-text`, {
+            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
+            const response = await fetch(`${API_BASE_URL}/generate-from-text`,{
                 method: "POST",
                 body: formData,
             });
