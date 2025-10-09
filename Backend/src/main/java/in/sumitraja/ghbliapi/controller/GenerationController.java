@@ -38,4 +38,7 @@ public class GenerationController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @GetMapping("/ghibli-info")
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("API is running");}
 }
