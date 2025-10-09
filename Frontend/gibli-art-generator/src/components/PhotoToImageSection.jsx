@@ -112,11 +112,13 @@ const PhotoToImageSection = () => {
 
 
         try {
-            const API_URL = 'http://localhost:8080/api/v1/generate';
+            const API_URL = `${process.env.REACT_APP_BACKEND_URL || "http://localhost:8080/api/v1"}/generate-from-photo`;
+            console.log("Using backend:", API_URL);
             const response = await fetch(API_URL, {
                 method: 'POST',
                 body: formData,
             });
+
 
             if (!response.ok) {
                 const errorText = await response.text();
