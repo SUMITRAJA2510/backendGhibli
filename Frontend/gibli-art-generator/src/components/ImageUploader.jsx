@@ -53,8 +53,8 @@ const ImageUploader = () => {
             const formData = new FormData();
             formData.append("image", resizedBlob, "resized.png");
             formData.append("prompt", "your prompt here"); // optional
-            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
-            const response = await fetch(`${API_BASE_URL}/generate-from-text`,{
+            const API_BASE_URL = "https://backendghibli.onrender.com/api/v1";
+            const response = await fetch(`${API_BASE_URL}/generate`,{
                 method: "POST",
                 body: formData,
             });

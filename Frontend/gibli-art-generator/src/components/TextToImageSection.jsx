@@ -25,7 +25,7 @@ const TextToImageSection = () => {
         const payload = { prompt, style };
 
         try {
-            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
+            const API_BASE_URL = "https://backendghibli.onrender.com/api/v1";
             const response = await fetch(`${API_BASE_URL}/generate-from-text`,{
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

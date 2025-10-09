@@ -112,9 +112,9 @@ const PhotoToImageSection = () => {
 
 
         try {
-            const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
+            const API_BASE_URL = "https://backendghibli.onrender.com/api/v1";
             console.log("Using backend:", API_BASE_URL);
-            const response = await fetch(`${API_BASE_URL}/generate-from-photo`,{
+            const response = await fetch(`${API_BASE_URL}/generate`, {
                 method: 'POST',
                 body: formData,
             });
